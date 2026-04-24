@@ -1,0 +1,534 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.doc{max-width:820px;margin:0 auto;padding:2.5rem 1.8rem;font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;font-size:13.5px;color:var(--color-text-primary);line-height:1.8;}
+
+/* header */
+.meta-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.5rem;}
+.meta-l{font-size:11px;color:var(--color-text-tertiary);}
+.meta-badge{font-size:10px;font-weight:500;background:#1E3A4C;color:#fff;padding:2px 10px;border-radius:2px;letter-spacing:0.5px;}
+.doc-title{font-size:26px;font-weight:500;color:#1E3A4C;margin-bottom:0.15rem;line-height:1.3;}
+.doc-en{font-size:12.5px;color:var(--color-text-tertiary);font-style:italic;margin-bottom:0.4rem;}
+.title-rule{border:none;border-top:2.5px solid #0F766E;margin:0.5rem 0 1.5rem;}
+
+/* section headings */
+h1{font-size:16px;font-weight:500;color:#1E3A4C;margin:2rem 0 0.25rem;padding-bottom:5px;border-bottom:1.5px solid #0F766E;}
+h2{font-size:13.5px;font-weight:500;color:#0F766E;margin:1.2rem 0 0.4rem;}
+h2::before{content:"▎ ";}
+p{margin-bottom:0.6rem;line-height:1.85;font-size:13px;}
+b{font-weight:500;}
+
+/* info box */
+.info-box{background:#E6F3F2;border-left:3px solid #0F766E;padding:0.85rem 1.1rem;margin:1rem 0;}
+.ib-title{font-size:12px;font-weight:500;color:#0A4F49;margin-bottom:0.5rem;}
+.info-row{display:flex;gap:0.5rem;margin-bottom:0.3rem;font-size:12px;align-items:flex-start;}
+.ir-key{font-weight:500;color:#085041;white-space:nowrap;min-width:110px;padding-top:1px;}
+.ir-note{font-size:11px;color:var(--color-text-secondary);font-style:italic;margin-top:2px;line-height:1.55;}
+
+/* project type cards */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;margin:0.8rem 0 1.3rem;}
+.type-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:0.9rem 1rem;position:relative;overflow:hidden;}
+.type-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
+.t1::before{background:#0F766E;} .t2::before{background:#1D4ED8;}
+.tc-num{font-size:10px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:3px;letter-spacing:0.5px;}
+.tc-title{font-size:13px;font-weight:500;color:#1E3A4C;margin-bottom:7px;line-height:1.4;}
+.tc-item{display:flex;gap:5px;font-size:11.5px;color:var(--color-text-secondary);margin-bottom:3px;line-height:1.5;}
+.tc-dot{flex-shrink:0;margin-top:1px;}
+.t1 .tc-dot{color:#0F766E;} .t2 .tc-dot{color:#1D4ED8;}
+
+/* workflow */
+.wf-phases{display:flex;flex-direction:column;}
+.phase{display:flex;gap:0;align-items:stretch;}
+.phase-line{display:flex;flex-direction:column;align-items:center;width:36px;flex-shrink:0;}
+.phase-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:500;color:#fff;flex-shrink:0;z-index:1;margin-top:2px;}
+.phase-connector{width:1.5px;flex:1;min-height:14px;}
+.phase-body{flex:1;padding:0 0 22px 10px;}
+.phase-title{font-size:13.5px;font-weight:500;color:#1E3A4C;margin-bottom:6px;margin-top:2px;}
+.phase-desc{font-size:12.5px;color:var(--color-text-secondary);line-height:1.85;margin-bottom:10px;padding:8px 12px;background:var(--color-background-secondary);border-radius:4px;border-left:2px solid var(--color-border-secondary);}
+.phase-desc b{color:var(--color-text-primary);font-weight:500;}
+.task-list{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px;}
+.task{font-size:10.5px;padding:2px 8px;border-radius:3px;color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);}
+.task.hi{background:#E6F3F2;color:#085041;border-color:#9DCDC7;font-weight:500;}
+.chips{display:flex;flex-wrap:wrap;gap:3px;}
+.chip{font-size:9.5px;padding:1px 7px;border-radius:999px;font-weight:500;white-space:nowrap;}
+
+/* tool tables */
+.tsec{margin-bottom:1.8rem;}
+.tsec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:0.6rem;}
+.tsec-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:500;flex-shrink:0;color:#fff;}
+.tsec-title{font-size:14px;font-weight:500;color:#1E3A4C;}
+.tsec-sub{font-size:10.5px;color:var(--color-text-tertiary);margin-left:auto;font-style:italic;}
+.tbl-wrap{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead th{padding:6px 8px;font-size:10px;font-weight:500;color:#fff;text-align:left;}
+tbody tr{border-bottom:0.5px solid var(--color-border-tertiary);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover td{background:var(--color-background-secondary);}
+td{padding:7px 8px;vertical-align:top;font-size:11px;line-height:1.6;}
+.tn{font-weight:500;color:#1E3A4C;font-size:11.5px;margin-bottom:1px;}
+.tt{font-size:9.5px;color:var(--color-text-tertiary);}
+.dev{font-size:10.5px;color:var(--color-text-secondary);}
+.tnote{font-size:10.5px;color:var(--color-text-secondary);font-style:italic;margin-top:3px;}
+.role-c{font-size:10.5px;color:var(--color-text-secondary);}
+.url{display:block;font-size:9.5px;color:var(--color-text-info);text-decoration:none;margin-top:3px;word-break:break-all;}
+.url:hover{text-decoration:underline;}
+.badge{display:inline-block;font-size:8.5px;padding:1px 5px;border-radius:999px;font-weight:500;white-space:nowrap;margin-top:3px;}
+.free{background:#E1F5EE;color:#085041;border:0.5px solid #5DCAA5;}
+.paid{background:#FAEEDA;color:#633806;border:0.5px solid #EF9F27;}
+.fm{background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;}
+.multi{background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;}
+.single{background:#E1F5EE;color:#085041;border:0.5px solid #5DCAA5;}
+.sweep{background:#FAEEDA;color:#633806;border:0.5px solid #EF9F27;}
+
+/* section divider */
+.sec-rule{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:2rem 0;}
+.footer-line{text-align:right;font-size:10.5px;color:var(--color-text-tertiary);font-style:italic;margin-top:2rem;padding-top:0.7rem;border-top:0.5px solid var(--color-border-tertiary);}
+</style>
+
+<div class="doc">
+
+<!-- ── HEADER ───────────────────────────────────────────── -->
+<div class="meta-top">
+  <div class="meta-l">건축시스템설계 (Architectural Systems Design)  ·  중앙대학교 건축공학과  ·  Prof. Youngsu Kim  ·  2025 / 2</div>
+  <div class="meta-badge">Capstone Project</div>
+</div>
+<div class="doc-title">건축환경설비에너지 최적 설계</div>
+<div class="doc-en">Optimal Design of Architectural Environment, Facilities &amp; Energy  —  Project Guidelines</div>
+<hr class="title-rule">
+
+<!-- ── 1. 개요 ──────────────────────────────────────────── -->
+<h1>1.  프로젝트 개요</h1>
+<p>본 프로젝트는 <b>건축시스템설계</b> 교과목의 캡스톤(Capstone) 과제로, 학부 2–3인 팀이 파라메트릭 설계 도구를 활용하여 실제 건물의 환경·설비·에너지 성능을 종합적으로 최적화하는 설계안을 제안하는 것을 목표로 한다. 수업에서 학습한 건물 열·빛 환경 이론, 설비 시스템 원리, 에너지 시뮬레이션 방법을 통합하여 하나의 완결된 설계 결과물로 구현한다.</p>
+<p>단순히 도구를 사용하는 실습이 아닌, <b>문제 정의 → 파라메트릭 모델 구축 → 시뮬레이션 연동 → 최적화 → 근거 제시</b>의 전 과정을 팀이 직접 설계·수행함으로써 엔지니어링 사고와 설계 감각을 함께 훈련한다.</p>
+
+<div class="info-box">
+  <div class="ib-title">프로젝트 기본 정보</div>
+  <div class="info-row"><span class="ir-key">교과목</span><span>건축시스템설계 (Architectural Systems Design)</span></div>
+  <div class="info-row"><span class="ir-key">과제 유형</span><span>캡스톤 프로젝트 — 그룹 과제 (2–3인)</span></div>
+  <div class="info-row">
+    <span class="ir-key">대상 건물</span>
+    <span>
+      중앙대학교 서울캠퍼스 내 건물 혹은 개별 구역 (팀별 선정, 지도교수 승인 필요)
+      <div class="ir-note">캠퍼스 주변부 지형 및 인접 건물을 포함한 Rhino 3D 기하 모델이 제공될 예정이며, 이를 기반으로 일조·차양·시뮬레이션 분석을 수행한다.</div>
+    </span>
+  </div>
+  <div class="info-row">
+    <span class="ir-key">기후 조건</span>
+    <span>
+      신용산 TMY3 기상 데이터 활용
+      <div class="ir-note">TMY3 (Typical Meteorological Year 3) — NREL 방법론 기반 대표 기상년도 데이터. EnergyPlus EPW 형식으로 변환하여 사용.</div>
+    </span>
+  </div>
+</div>
+
+<!-- ── 2. 목적 ──────────────────────────────────────────── -->
+<h1>2.  프로젝트 목적</h1>
+<h2>2-1.  파라메트릭 설계 사고 체득</h2>
+<p>건물의 외피 형태, 창호 사양, 차양 형상, 설비 시스템 등을 <b>수치 변수(Parameter)</b>로 정의하고, 알고리즘 기반으로 설계 공간(Design Space)을 탐색하는 방법론을 직접 경험한다. 수백–수천 가지 조합 중에서 최적해를 도출하는 과정을 통해, 직관적 설계 결정이 초래할 수 있는 에너지 낭비와 쾌적 저하를 정량적으로 인식하게 된다.</p>
+<h2>2-2.  다목적 성능의 균형 탐색</h2>
+<p>에너지 소비(EUI), 시각쾌적(DA·DGP), 열쾌적(PMV·UTCI), 경제성(ROI·SPP), 운영 탄소(kgCO₂/m²·yr) 중 팀이 선정한 <b>2가지 이상의 목표</b>를 동시에 최적화하는 문제를 설정한다. Pareto 프런트로 트레이드오프를 가시화하고, 팀의 설계 판단으로 최적 균형점을 선택한다.</p>
+<h2>2-3.  근거 기반 설계 보고 역량</h2>
+<p>최적화 결과를 Baseline 모델과 정량 비교하고, <b>"왜 이 설계안인가"</b>를 데이터·그래프·렌더링으로 설득력 있게 제시하는 보고 역량을 기른다.</p>
+
+<!-- ── 3. 유형 ──────────────────────────────────────────── -->
+<h1>3.  프로젝트 유형</h1>
+<p>두 가지 유형 중 팀의 관심 주제와 대상 건물에 따라 하나를 선택한다. 세부 최적화 대상은 팀이 자유롭게 설정하되, 지도교수와 협의하여 확정한다.</p>
+<div class="type-grid">
+  <div class="type-card t1">
+    <div class="tc-num">TYPE 1</div>
+    <div class="tc-title">기존 건물 그린리모델링<br>— 건물 성능 및 실내환경 질 최적화</div>
+    <div class="tc-item"><span class="tc-dot">·</span><span>외피 단열 보강 (단열재 두께·종류)</span></div>
+    <div class="tc-item"><span class="tc-dot">·</span><span>창호 교체 시나리오 (U-값·SHGC·면적비)</span></div>
+    <div class="tc-item"><span class="tc-dot">·</span><span>자연채광 개선 및 눈부심 제어</span></div>
+    <div class="tc-item"><span class="tc-dot">·</span><span>실내 열쾌적·공기질 개선</span></div>
+    <div class="tc-item"><span class="tc-dot">·</span><span>운영 에너지 및 탄소 배출 저감</span></div>
+    <div class="tc-item"><span class="tc-dot">·</span><span>ROI·투자회수기간(SPP) 경제성 분석</span></div>
+  </div>
+  <div class="type-card t2">
+    <div class="tc-num">TYPE 2</div>
+    <div class="tc-title">친환경 건축설비 최적화<br>— 액티브 시스템 / 신재생에너지 / 건축 요소</div>
+    <div class="tc-item"><span class="tc-dot" style="color:#1D4ED8;">·</span><span>액티브 설비 시스템 (HVAC·열원 시스템)</span></div>
+    <div class="tc-item"><span class="tc-dot" style="color:#1D4ED8;">·</span><span>신재생에너지 (BIPV·지붕 태양광 배치)</span></div>
+    <div class="tc-item"><span class="tc-dot" style="color:#1D4ED8;">·</span><span>설비 제어 알고리즘 (스케줄·디밍·블라인드)</span></div>
+    <div class="tc-item"><span class="tc-dot" style="color:#1D4ED8;">·</span><span>외부 차양·루버 형상 최적화</span></div>
+    <div class="tc-item"><span class="tc-dot" style="color:#1D4ED8;">·</span><span>건물 매스·개구부 파라메트릭 설계</span></div>
+    <div class="tc-item"><span class="tc-dot" style="color:#1D4ED8;">·</span><span>도시열섬·외부 열쾌적 환경 개선</span></div>
+  </div>
+</div>
+
+<!-- ── 4. 워크플로우 ─────────────────────────────────────── -->
+<h1>4.  파라메트릭 최적화 설계 워크플로우</h1>
+<p>착수부터 발표 완성까지 수행해야 할 모든 태스크를 7단계로 정리했다. 각 단계는 선행 단계의 산출물을 입력으로 받아 다음 단계로 이어지는 선형 파이프라인 구조이며, 04 최적화 결과가 기대에 미치지 못할 경우 03 시뮬레이션 단계로 되돌아가 모델을 수정한다.</p>
+
+<svg viewBox="0 0 720 88" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:0.6rem 0 1.6rem;">
+  <defs><marker id="ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#CBD5E1"/></marker></defs>
+  <g font-family="Arial,sans-serif">
+    <rect x="2" y="24" width="80" height="40" rx="4" fill="#1E3A4C"/>
+    <text x="42" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">01  정의</text>
+    <text x="42" y="53" text-anchor="middle" fill="#93BFCF" font-size="8">목표·KPI 설정</text>
+    <line x1="83" y1="44" x2="97" y2="44" stroke="#CBD5E1" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="99" y="24" width="80" height="40" rx="4" fill="#0F766E"/>
+    <text x="139" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">02  모델링</text>
+    <text x="139" y="53" text-anchor="middle" fill="#A7D4CF" font-size="8">Rhino·GH 구축</text>
+    <line x1="180" y1="44" x2="194" y2="44" stroke="#CBD5E1" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="196" y="24" width="80" height="40" rx="4" fill="#1D4ED8"/>
+    <text x="236" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">03  시뮬레이션</text>
+    <text x="236" y="53" text-anchor="middle" fill="#BFCFEE" font-size="8">Baseline 검증</text>
+    <line x1="277" y1="44" x2="291" y2="44" stroke="#CBD5E1" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="293" y="24" width="80" height="40" rx="4" fill="#6D28D9"/>
+    <text x="333" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">04  최적화</text>
+    <text x="333" y="53" text-anchor="middle" fill="#C4B5F4" font-size="8">알고리즘 실행</text>
+    <line x1="374" y1="44" x2="388" y2="44" stroke="#CBD5E1" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="390" y="24" width="80" height="40" rx="4" fill="#B45309"/>
+    <text x="430" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">05  결과분석</text>
+    <text x="430" y="53" text-anchor="middle" fill="#F5D0A0" font-size="8">Pareto 해석</text>
+    <line x1="471" y1="44" x2="485" y2="44" stroke="#CBD5E1" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="487" y="24" width="80" height="40" rx="4" fill="#0F766E"/>
+    <text x="527" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">06  시각화</text>
+    <text x="527" y="53" text-anchor="middle" fill="#A7D4CF" font-size="8">그래프·렌더링</text>
+    <line x1="568" y1="44" x2="582" y2="44" stroke="#CBD5E1" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="584" y="24" width="134" height="40" rx="4" fill="#1E3A4C"/>
+    <text x="651" y="40" text-anchor="middle" fill="#fff" font-size="9" font-weight="500">07  보고서·발표</text>
+    <text x="651" y="53" text-anchor="middle" fill="#93BFCF" font-size="8">근거 문서화 완성</text>
+  </g>
+  <path d="M430,64 Q430,80 333,80 Q236,80 236,65" fill="none" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ar)"/>
+  <text x="333" y="87" text-anchor="middle" fill="#94A3B8" font-size="7.5">검증 미충족 시 재시뮬레이션</text>
+</svg>
+
+<div class="wf-phases">
+
+  <div class="phase">
+    <div class="phase-line">
+      <div class="phase-dot" style="background:#1E3A4C;">01</div>
+      <div class="phase-connector" style="background:linear-gradient(#1E3A4C,#0F766E);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-title">프로젝트 정의 — 대상 건물 · 유형 · KPI · 매개변수 설정</div>
+      <div class="phase-desc"><b>무엇을 바꿔서 무엇을 얼마나 개선할 것인가</b>를 명확히 정의하는 단계로, 프로젝트 전체 방향을 결정한다. 최적화 목표(KPI)와 현재 상태(Baseline), 그리고 변화시킬 설계 변수(Parameter)의 범위를 구체적으로 정해야 이후 단계가 의미 있게 진행된다. 이 단계를 소홀히 하면 나중에 좋은 결과를 얻어도 "무엇과 비교해서 좋은지"를 말할 수 없다.</div>
+      <div class="task-list">
+        <span class="task hi">대상 건물(구역) 선정</span><span class="task hi">프로젝트 유형 결정 (Type 1 / 2)</span>
+        <span class="task">최적화 목표함수(KPI) 2개 이상 선정</span><span class="task">Baseline 정의 (현황 사양·운영 조건)</span>
+        <span class="task">최적화 매개변수 및 범위 설정 (변수 3개 이상)</span><span class="task">최적화 알고리즘 선택</span>
+      </div>
+      <div class="chips">
+        <span class="chip free">문헌 검토</span><span class="chip free">현장 답사</span><span class="chip free">지도교수 상담</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-line">
+      <div class="phase-dot" style="background:#0F766E;">02</div>
+      <div class="phase-connector" style="background:linear-gradient(#0F766E,#1D4ED8);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-title">파라메트릭 모델링 — Rhino · Grasshopper 구축</div>
+      <div class="phase-desc">01단계에서 정의한 설계 변수를 실제로 작동하는 디지털 모델로 구현하는 단계다. <b>설계 변수를 수치로 정의하고, 그 값이 바뀌면 건물 형태·재료·시스템이 자동으로 연동되어 바뀌는 파라메트릭 파이프라인</b>을 구축하는 것이 목표다. 이 모델이 완성되어야 알고리즘이 수천 가지 설계 조합을 자동으로 탐색하는 04단계가 가능해진다.</div>
+      <div class="task-list">
+        <span class="task hi">제공 캠퍼스 Rhino 기하 모델 로드 및 확인</span>
+        <span class="task">대상 건물·구역 기하 모델 구성 (인접 건물·지형 포함)</span>
+        <span class="task">Grasshopper 슬라이더(Gene) 변수 정의</span>
+        <span class="task">건물 기하·재료·창호·차양 파라메트릭 컴포넌트 연결</span>
+        <span class="task">Ironbug HVAC 루프 구성 (Type 2 설비 팀)</span>
+        <span class="task">Pollination BIM 모델 변환 연동 (필요시)</span>
+        <span class="task">데이터 흐름 검증 및 오류 해결</span>
+      </div>
+      <div class="chips">
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Rhino 7/8</span>
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Grasshopper</span>
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Ironbug</span>
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Pollination</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-line">
+      <div class="phase-dot" style="background:#1D4ED8;">03</div>
+      <div class="phase-connector" style="background:linear-gradient(#1D4ED8,#6D28D9);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-title">시뮬레이션 연동 및 Baseline 검증</div>
+      <div class="phase-desc">파라메트릭 모델에 시뮬레이션 엔진을 연결하고, <b>최적화에 앞서 현재 상태(Baseline)의 성능 수치가 현실적으로 타당한지 반드시 확인</b>하는 단계다. 잘못된 Baseline 위에서 최적화를 진행하면 결과 자체의 신뢰성이 사라지기 때문에, 이 검증은 생략할 수 없는 필수 관문이다. Baseline이 검증되어야 이후 최적화 결과를 "얼마나 개선되었는가"의 기준으로 삼을 수 있다.</div>
+      <div class="task-list">
+        <span class="task hi">신용산 TMY3 기상 데이터 EPW 로드</span>
+        <span class="task">Ladybug 일사량·Sun Path 기후 분석</span>
+        <span class="task">Honeybee 에너지 모델 구성 (열 존·재료·스케줄)</span>
+        <span class="task">Honeybee-Radiance 채광 모델 구성 (DA·DGP)</span>
+        <span class="task">ClimateStudio 통합 시뮬레이션 설정 (해당 팀)</span>
+        <span class="task">Dragonfly 도시 모델 구성 (도시 스케일 팀)</span>
+        <span class="task hi">Baseline 단일 시뮬레이션 실행 및 결과 검증</span>
+        <span class="task">KPI 산출값 합리성 검토 (문헌값과 비교)</span>
+      </div>
+      <div class="chips">
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">Ladybug</span>
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">Honeybee</span>
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">Honeybee-Radiance</span>
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">ClimateStudio</span>
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">Dragonfly</span>
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">EnergyPlus</span>
+        <span class="chip" style="background:#E6F1FB;color:#0C447C;border:0.5px solid #85B7EB;">Radiance</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-line">
+      <div class="phase-dot" style="background:#6D28D9;">04</div>
+      <div class="phase-connector" style="background:linear-gradient(#6D28D9,#B45309);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-title">최적화 알고리즘 설정 및 실행</div>
+      <div class="phase-desc">알고리즘이 수백–수천 개의 설계 조합을 자동으로 탐색하며 <b>설계자가 직접 시도할 수 없는 규모의 설계 공간에서 최적해를 찾아내는</b> 단계다. 단일 목표라면 가장 좋은 하나의 해를, 복수 목표라면 서로 상충하는 목표들 사이의 최적 균형 집합인 Pareto 프런트를 도출한다. 이 단계가 파라메트릭 최적화 워크플로우의 핵심이며, 알고리즘 없이 수행한 설계는 단순 시나리오 비교에 불과하다.</div>
+      <div class="task-list">
+        <span class="task hi">알고리즘 Fitness 함수 연결 (KPI → GH 출력 연동)</span>
+        <span class="task">세대(Generation) 수·개체 수(Population) 설정</span>
+        <span class="task">단일목적 — Galapagos 실행 및 수렴 모니터링</span>
+        <span class="task">다목적 — Octopus / Wallacei 실행, Pareto 프런트 생성</span>
+        <span class="task">설계 탐색 — Colibri 반복 탐색 + Design Explorer 업로드</span>
+        <span class="task">수렴 확인 및 파라미터 조정 후 필요 시 재실행</span>
+      </div>
+      <div class="chips">
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Galapagos</span>
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Octopus</span>
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Wallacei</span>
+        <span class="chip" style="background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;">Colibri + Design Explorer</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-line">
+      <div class="phase-dot" style="background:#B45309;">05</div>
+      <div class="phase-connector" style="background:linear-gradient(#B45309,#0F766E);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-title">결과 분석 — Pareto 해석 · 민감도 분석 · 최적 설계안 선택</div>
+      <div class="phase-desc">알고리즘이 생성한 수많은 해(Solution) 중에서 <b>팀이 데이터에 근거하여 최종 설계안을 합리적으로 선택</b>하는 단계다. Pareto 프런트에서 목표들 간의 트레이드오프 패턴을 읽고 균형점을 결정하며, 어떤 설계 변수가 결과에 가장 큰 영향을 주었는지 민감도를 파악한다. 선택의 근거가 데이터에서 나올 때 비로소 근거 기반 설계(Evidence-Based Design)가 완성된다.</div>
+      <div class="task-list">
+        <span class="task hi">Pareto 프런트 시각화 및 트레이드오프 해석</span>
+        <span class="task">변수 민감도 분석 (KPI에 가장 영향 큰 변수 특정)</span>
+        <span class="task">설계 판단 기준 수립 및 최적 균형점 선택</span>
+        <span class="task hi">Baseline 대비 KPI 개선량 정량화</span>
+        <span class="task">선택된 최적 설계안으로 최종 시뮬레이션 검증 실행</span>
+        <span class="task">경제성 분석 (ROI·SPP) — 해당 팀</span>
+        <span class="task">탄소 저감량 산출 (운영탄소 kgCO₂/m²·yr) — 해당 팀</span>
+      </div>
+      <div class="chips">
+        <span class="chip sweep">Design Explorer</span>
+        <span class="chip sweep">Wallacei 통계</span>
+        <span class="chip sweep">Excel / Python</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-line">
+      <div class="phase-dot" style="background:#0F766E;">06</div>
+      <div class="phase-connector" style="background:linear-gradient(#0F766E,#1E3A4C);"></div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-title">시각화 — 그래프 · 분포도 · 렌더링</div>
+      <div class="phase-desc">분석 결과를 숫자 표에서 꺼내 <b>보는 사람이 즉각 이해할 수 있는 시각 언어로 변환</b>하는 단계다. 아무리 뛰어난 최적화 결과도 명확하게 전달되지 않으면 설득력을 갖지 못하며, 이 단계에서 만들어진 그래프·분포도·렌더링이 07단계 보고서와 발표의 핵심 콘텐츠가 된다.</div>
+      <div class="task-list">
+        <span class="task hi">KPI 비교 그래프 (Baseline vs 최적안 — 막대/방사형)</span>
+        <span class="task">Pareto 산점도 (트레이드오프 및 선택 균형점 시각화)</span>
+        <span class="task">변수 민감도 히트맵 또는 병렬 좌표계</span>
+        <span class="task">평면 DA·UDI·ECI 분포 색상 지도</span>
+        <span class="task hi">최적 설계안 Rhino 3D 렌더링</span>
+        <span class="task">차양·루버·파사드 형상 도면 (해당 팀)</span>
+        <span class="task">월별·시간대별 에너지/부하 프로파일 그래프</span>
+      </div>
+      <div class="chips">
+        <span class="chip free">Grasshopper (Ladybug 시각화)</span>
+        <span class="chip free">Rhino 렌더링</span>
+        <span class="chip free">Excel / Python matplotlib</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-line"><div class="phase-dot" style="background:#1E3A4C;">07</div></div>
+    <div class="phase-body" style="padding-bottom:0;">
+      <div class="phase-title">보고서 및 발표자료 작성</div>
+      <div class="phase-desc">프로젝트 전 과정을 논리적 서사로 정리하고, <b>"왜 이 설계 변수를 선택했고, 왜 이 최적안을 채택했는가"를 데이터로 설득하는 문서와 프레젠테이션</b>을 완성하는 단계다. 결과를 나열하는 것이 아니라 문제 정의에서 결론까지 이어지는 흐름 속에서 각 선택의 근거가 명확히 제시되어야 하며, 이것이 이 프로젝트가 단순 실습이 아닌 근거 기반 설계임을 증명하는 최종 산출물이다.</div>
+      <div class="task-list">
+        <span class="task hi">중간 진행 보고 (GH 모델 시연 + Baseline 결과 공유)</span>
+        <span class="task">최종 보고서 작성 (배경·방법론·결과·결론)</span>
+        <span class="task">발표 슬라이드 구성 (10분 발표 기준, 시각화 중심)</span>
+        <span class="task">Grasshopper 파일 정리 및 컴포넌트 주석 추가</span>
+        <span class="task hi">설계 결정 근거 명시 — 데이터 기반 논증</span>
+        <span class="task">공모전 출품 검토 (지도교수 상담)</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end wf-phases -->
+
+<!-- ── 5. 도구 ──────────────────────────────────────────── -->
+<hr class="sec-rule">
+<h1>5.  주요 도구 및 소프트웨어 생태계</h1>
+<p>프로젝트는 <b>Rhino–Grasshopper</b>를 중심으로 아래 네 계층의 도구를 연동해 수행한다. 팀의 주제와 난이도에 따라 필요한 도구를 선택적으로 적용한다.</p>
+
+<!-- ① 모델링 -->
+<div class="tsec">
+  <div class="tsec-hdr">
+    <div class="tsec-num" style="background:#1E3A4C;">1</div>
+    <div class="tsec-title">파라메트릭 모델링 환경</div>
+    <div class="tsec-sub">Parametric Modeling Platform</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead style="background:#1E3A4C;"><tr>
+      <th style="width:140px">도구</th><th style="width:90px">개발사</th><th>주요 기능 및 특징</th><th style="width:138px">프로젝트 내 역할</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td><div class="tn">Rhino 7 / 8</div><div class="tt">3D NURBS 모델러</div><span class="badge paid">유료</span><a class="url" href="https://www.rhino3d.com" target="_blank">rhino3d.com</a></td>
+      <td><div class="dev">Robert McNeel &amp; Associates</div></td>
+      <td>NURBS 기반 자유곡면 3D 모델링. 건물 외피·비정형 형태 자유 표현. Grasshopper 기반 실행 환경이며 시뮬레이션 결과를 3D 공간에서 직접 시각화.</td>
+      <td><div class="role-c">건물 기하 생성 및 캠퍼스 모델 기반 시뮬레이션 플랫폼</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Grasshopper</div><div class="tt">비주얼 프로그래밍 · Rhino 내장</div><span class="badge free">무료 · 내장</span><a class="url" href="https://www.grasshopper3d.com" target="_blank">grasshopper3d.com</a></td>
+      <td><div class="dev">Robert McNeel &amp; Associates</div></td>
+      <td>슬라이더·컴포넌트를 노드로 연결해 건물 형태·재료·스케줄을 알고리즘으로 자동 생성. 설계 변수를 수치로 정의하고 시뮬레이션 엔진과 직접 연동해 파라메트릭 최적화 루프 구성.</td>
+      <td><div class="role-c">변수 정의·데이터 흐름 제어·최적화 루프 핵심 허브</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Pollination</div><div class="tt">BIM-to-BEM 변환 플랫폼</div><span class="badge fm">Freemium</span><a class="url" href="https://www.pollination.solutions" target="_blank">pollination.solutions</a></td>
+      <td><div class="dev">Ladybug Tools LLC (DOE SBIR 지원)</div></td>
+      <td>Revit·Rhino BIM 모델을 HBJSON 형식으로 자동 변환해 Honeybee와 직접 연동. 클라우드 시뮬레이션 지원. Grasshopper 없이도 웹 GUI로 에너지 모델 편집·실행 가능.<div class="tnote">복잡한 실존 건물 모델의 BIM-to-BEM 파이프라인 (중·고급 팀)</div></td>
+      <td><div class="role-c">실존 건물 모델을 에너지 분석 모델로 빠르게 변환</div></td>
+    </tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ② 환경 -->
+<div class="tsec">
+  <div class="tsec-hdr">
+    <div class="tsec-num" style="background:#0F766E;">2</div>
+    <div class="tsec-title">기후 · 환경 분석 플러그인</div>
+    <div class="tsec-sub">Climate &amp; Environmental Analysis</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead style="background:#0F766E;"><tr>
+      <th style="width:140px">도구</th><th style="width:90px">개발사</th><th>주요 기능 및 특징</th><th style="width:138px">프로젝트 내 역할</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td><div class="tn">Ladybug</div><div class="tt">기후 데이터 시각화</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://www.ladybug.tools" target="_blank">ladybug.tools</a></td>
+      <td><div class="dev">Ladybug Tools LLC (Mostapha Roudsari 외)</div></td>
+      <td>EPW 기후 파일 로드·시각화. Sun Path, Wind Rose, Radiation Rose, Psychrometric Chart 생성. 외피 면별 연간 태양복사량 분석.<div class="tnote">신용산 TMY3 EPW 기반 기후 분석에 필수 — 모든 팀 사용</div></td>
+      <td><div class="role-c">기후 조건 이해 및 초기 설계 일사·바람 분석</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Dragonfly</div><div class="tt">도시 규모 에너지·기후 모델링</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://www.ladybug.tools/dragonfly.html" target="_blank">ladybug.tools/dragonfly</a></td>
+      <td><div class="dev">Ladybug Tools LLC (Chris Mackey 외)</div></td>
+      <td>도시 블록·지구 단위 에너지 모델 생성. URBANopt·OpenStudio·EnergyPlus 연동. Urban Weather Generator(UWG)로 도시열섬(UHI) 반영 EPW 보정.<div class="tnote">도시 블록·캠퍼스 마이크로기후 주제 팀</div></td>
+      <td><div class="role-c">도시 규모 에너지 시뮬레이션 및 도시열섬 기후 보정</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Butterfly</div><div class="tt">CFD 연동 (OpenFOAM)</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://www.ladybug.tools/butterfly.html" target="_blank">ladybug.tools/butterfly</a></td>
+      <td><div class="dev">Ladybug Tools LLC (Theodoros Galanos 외)</div></td>
+      <td>OpenFOAM 기반 CFD를 Grasshopper에서 구동. 건물 주변 바람 유동장·자연환기 효율·실내 기류 분포 계산. 옥외 열쾌적(UTCI·PET) 연동.<div class="tnote">자연환기·옥외 환경 주제 팀 선택 — OpenFOAM 별도 설치 필요</div></td>
+      <td><div class="role-c">바람 환경·자연환기 CFD 시뮬레이션 (심화 팀)</div></td>
+    </tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ③ BPS -->
+<div class="tsec">
+  <div class="tsec-hdr">
+    <div class="tsec-num" style="background:#1D4ED8;">3</div>
+    <div class="tsec-title">에너지 · 채광 · 설비 시뮬레이션 플러그인 및 엔진</div>
+    <div class="tsec-sub">Building Performance Simulation (BPS)</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead style="background:#1D4ED8;"><tr>
+      <th style="width:140px">도구</th><th style="width:90px">개발사</th><th>주요 기능 및 특징</th><th style="width:138px">프로젝트 내 역할</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td><div class="tn">Honeybee</div><div class="tt">에너지 모델링 플러그인</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://www.ladybug.tools/honeybee.html" target="_blank">ladybug.tools/honeybee</a></td>
+      <td><div class="dev">Ladybug Tools LLC (Mostapha Roudsari 외)</div></td>
+      <td>Grasshopper에서 EnergyPlus IDF 자동 생성·실행. 열 존·재료·창호·스케줄·설비 설정. EUI·냉난방 부하·설비 COP·조명 에너지 산출. ASHRAE 90.1 기준 검토 가능.<div class="tnote">LBT 1.x 버전 권장 — Legacy 0.0.6x와 구분</div></td>
+      <td><div class="role-c">EUI·냉난방 부하·설비 성능 시뮬레이션 핵심</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Ironbug</div><div class="tt">HVAC 상세 시스템 모델링</div><span class="badge free">무료</span><a class="url" href="https://github.com/MingboPeng/Ironbug" target="_blank">github.com/MingboPeng/Ironbug</a><a class="url" href="https://docs.ladybug.tools/ironbug-primer" target="_blank">docs.ladybug.tools/ironbug-primer</a></td>
+      <td><div class="dev">Mingbo Peng (Ladybug Tools, C# 개발)</div></td>
+      <td>OpenStudio HVAC 모델링 기능 전체를 Grasshopper로 구현. <b>AHU·냉온수 루프(CHW·HHW·CW)·VRF·SHW·PV 발전 시스템</b> 등 80개 이상 컴포넌트. LEED Baseline HVAC 모델 구성 가능.<div class="tnote">Honeybee 기본 HVAC보다 세밀한 설비 설계 — Type 2 설비 팀 필수</div></td>
+      <td><div class="role-c">상세 HVAC 설계·설비 시스템 최적화</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Honeybee-Radiance</div><div class="tt">채광·조도 시뮬레이션 플러그인</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://www.ladybug.tools/honeybee.html" target="_blank">ladybug.tools/honeybee</a></td>
+      <td><div class="dev">Ladybug Tools LLC (Radiance 연동)</div></td>
+      <td>Radiance 엔진 Grasshopper 연동. DA, UDI, ASE, DGP 연간 산출. LEED v4·BREEAM 채광 기준 평가.<div class="tnote">계산 시간이 길어 런 수 전략적 계획 필요</div></td>
+      <td><div class="role-c">자연채광·눈부심·과조도 정량 평가</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">ClimateStudio</div><div class="tt">통합 채광·에너지 GUI</div><span class="badge paid">유료 (교육용 할인)</span><a class="url" href="https://www.solemma.com/climatestudio" target="_blank">solemma.com/climatestudio</a></td>
+      <td><div class="dev">Solemma LLC (Harvard GSD 출신 팀)</div></td>
+      <td>Radiance + EnergyPlus 통합 고급 시뮬레이션. Annual Glare·Thermal Comfort·LEED/BREEAM 지표 GUI 산출. Grasshopper 연동 가능.<div class="tnote">채광 분석 입문 및 LEED 검증에 적합</div></td>
+      <td><div class="role-c">채광+에너지 통합 분석 (고급 팀·채광 주제 팀)</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">EnergyPlus</div><div class="tt">에너지 시뮬레이션 엔진</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://energyplus.net" target="_blank">energyplus.net</a></td>
+      <td><div class="dev">U.S. DOE (Honeybee·Ironbug 백엔드)</div></td>
+      <td>ASHRAE Standard 140 국제 검증 완료. 시간 단위 열부하·에너지·설비 운전 계산. Honeybee·Ironbug가 IDF 파일로 자동 전달. 직접 조작 불필요.</td>
+      <td><div class="role-c">Honeybee·Ironbug 백엔드 에너지 계산 엔진</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Radiance</div><div class="tt">광 시뮬레이션 엔진</div><span class="badge free">무료 · 오픈소스</span><a class="url" href="https://www.radiance-online.org" target="_blank">radiance-online.org</a></td>
+      <td><div class="dev">LBNL (Lawrence Berkeley Nat'l Lab)</div></td>
+      <td>CIE·IESNA 국제 검증 물리 기반 광 추적(Ray-Tracing) 엔진. Honeybee-Radiance·ClimateStudio 백엔드로 자동 실행. 직접 조작 불필요.</td>
+      <td><div class="role-c">Honeybee-Radiance·ClimateStudio 백엔드 채광 엔진</div></td>
+    </tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ④ 최적화 -->
+<div class="tsec">
+  <div class="tsec-hdr">
+    <div class="tsec-num" style="background:#6D28D9;">4</div>
+    <div class="tsec-title">최적화 알고리즘 플러그인</div>
+    <div class="tsec-sub">Optimization Algorithms</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead style="background:#6D28D9;"><tr>
+      <th style="width:140px">도구</th><th style="width:90px">알고리즘 유형</th><th>작동 방식 및 특징</th><th style="width:138px">적합 상황</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td><div class="tn">Galapagos</div><div class="tt">Grasshopper 내장</div><span class="badge free">무료 · 내장</span><span class="badge single">단일목적</span><a class="url" href="https://www.grasshopper3d.com" target="_blank">grasshopper3d.com</a></td>
+      <td><div class="dev">GA + Simulated Annealing</div></td>
+      <td>Grasshopper 기본 내장 단일목적 최적화. 슬라이더→Gene, 수치 출력→Fitness 연결, 세대별 진화 탐색. 설정 가장 간단.<div class="tnote">개발: David Rutten (McNeel)  ·  Holland (1975) GA</div></td>
+      <td><div class="role-c">입문 팀, KPI 1개 단독 최적화</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Octopus</div><div class="tt">외부 플러그인 (무료)</div><span class="badge free">무료</span><span class="badge multi">다목적</span><a class="url" href="https://www.food4rhino.com/en/app/octopus" target="_blank">food4rhino.com/en/app/octopus</a></td>
+      <td><div class="dev">NSGA-II / SPEA-II / HypE</div></td>
+      <td>NSGA-II 기반 다목적 유전 알고리즘. 복수 목표 동시 최적화, Pareto 프런트 3D 산점도 실시간 시각화.<div class="tnote">개발: Robert Vierlinger (AIT)  ·  Deb et al. (2002), IEEE Trans. Evol. Comput.</div></td>
+      <td><div class="role-c">심화 팀, KPI 2개 이상 동시 최적화</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Wallacei</div><div class="tt">외부 플러그인 (무료)</div><span class="badge free">무료</span><span class="badge multi">다목적</span><a class="url" href="https://www.wallacei.com" target="_blank">wallacei.com</a></td>
+      <td><div class="dev">NSGA-II + 통계 분석 내장</div></td>
+      <td>NSGA-II 기반 + 세대별 통계(평균·분산·엔트로피)·Radial Chart·Population Graph 시각화 통합. 최적 해 선택·GH 역전송 내장.<div class="tnote">개발: Mohammed Makki et al. — Makki (2018), SimAUD</div></td>
+      <td><div class="role-c">다목적 결과 통계 분석·시각화 중심 과제</div></td>
+    </tr>
+    <tr>
+      <td><div class="tn">Colibri + Design Explorer</div><div class="tt">외부 플러그인 + 웹 플랫폼</div><span class="badge free">무료</span><span class="badge sweep">설계 탐색</span><a class="url" href="https://core.thorntontomasetti.com/colibri/" target="_blank">core.thorntontomasetti.com/colibri</a><a class="url" href="https://tt-acm.github.io/DesignExplorer/" target="_blank">tt-acm.github.io/DesignExplorer</a></td>
+      <td><div class="dev">파라메트릭 반복 탐색 (Sweep)</div></td>
+      <td>슬라이더 격자형 순차 반복 + Design Explorer 웹 병렬 좌표계(Parallel Coordinates) 인터랙티브 탐색·필터링.<div class="tnote">CORE studio, Thornton Tomasetti (2016) — 최적화보다 '설계 공간 탐색'에 특화</div></td>
+      <td><div class="role-c">변수 2–3개, 설계 공간 탐색·시각화 목적</div></td>
+    </tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="footer-line">건축시스템설계  ·  중앙대학교 건축공학과  ·  Prof. Youngsu Kim  ·  myk127@cau.ac.kr  ·  BLDG 208 RM 402</div>
+</div>
